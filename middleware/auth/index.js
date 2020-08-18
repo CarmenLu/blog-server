@@ -3,21 +3,21 @@ import conf from '../../config'
 
 export default () => {
     return async (ctx, next) => {
-        console.log(conf.auth.blackList.some(v=>ctx.path.indexOf(v>=0)))
-        if (conf.auth.blackList.some(v => ctx.path.indexOf(v) >= 0)) {
-            let token = ctx.cookies.get(conf.auth.tokenKey)
-            try {
-                jwt.verify(token, conf.auth.admin_secret)
-            } catch (e) {
-                if ('TokenExpiredError' === e.name) {
-                    ctx.sendError('token已过期,请重新登陆!')
-                    ctx.throw(401, 'token expired')
-                }
-                ctx.sendError('token验证失败，请重新登陆')
-                ctx.throw(401, 'invalid token')
-            }
-            console.log('验证成功')
-        }
+        // TODO 记得去掉注释
+        // if (conf.auth.blackList.some(v => ctx.path.indexOf(v) >= 0)) {
+        //     let token = ctx.cookies.get(conf.auth.tokenKey)
+        //     try {
+        //         jwt.verify(token, conf.auth.admin_secret)
+        //     } catch (e) {
+        //         if ('TokenExpiredError' === e.name) {
+        //             ctx.sendError('token已过期,请重新登陆!')
+        //             ctx.throw(401, 'token expired')
+        //         }
+        //         ctx.sendError('token验证失败，请重新登陆')
+        //         ctx.throw(401, 'invalid token')
+        //     }
+        //     console.log('验证成功')
+        // }
         await next()
     }
 }

@@ -3,6 +3,7 @@ import Send from './send'
 import Func from './func'
 import Auth from './auth'
 import Rule from './rule'
+import PicService from './img-service'
 import cors from 'koa2-cors'
 import bodyParser from 'koa-bodyparser'
 
@@ -39,7 +40,8 @@ export default app => {
     app.use(Func())
     // 授权
     app.use(Auth())
-
+    // 图片上传
+    app.use(PicService())
     // 路径中间件
     Rule({
         app,

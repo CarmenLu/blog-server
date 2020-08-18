@@ -4,11 +4,11 @@ import conf from '../../config'
 
 let login = async function (ctx, next) {
     // 登陆接口 user
-    let { username, pwd } = JSON.parse(ctx.request.body)
+    let { username, pwd } = ctx.request.body
     try {
         // 查数据库
         let data = await ctx.findOne(userModel, { username: username })
-        if (!data||data.pwd!==pwd) {
+        if (!data || data.pwd !== pwd) {
             return ctx.sendError('用户名/密码错误')
         }
         /**
@@ -37,7 +37,8 @@ let login = async function (ctx, next) {
             httpOnly: false, // 不能通过js来获取cookie
             maxAge: conf.cookies.maxAge
         })
-        ctx.send({ message: '登陆成功',token:token })
+        let access_oss = conf.AccessInfo
+        ctx.send({ message: '登陆成功', access_oss })
         console.log('登陆成功')
     } catch (e) {
         ctx.throw('登陆失败', e)
